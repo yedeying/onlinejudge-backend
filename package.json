@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "start": "tsc && node dist/server.js"
+  },
+  "dependencies": {
+    "koa": "^2.5.2",
+    "koa-router": "^7.4.0"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.0.46",
+    "@types/koa-router": "^7.0.31",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.3"
+  }
+}
