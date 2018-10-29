@@ -39,7 +39,7 @@ app.use(error({
     code: err.code,
     status: err.status,
     message: err.message,
-    stack: err.stack,
+    // stack: err.stack,
   })
 }));
 
