@@ -38,7 +38,7 @@ app.use(error({
   format: (err: any) => ({
     code: err.code,
     status: err.status,
-    message: err.message,
+    message: err.message
     // stack: err.stack,
   })
 }));
@@ -50,7 +50,7 @@ app.use(async (ctx: Koa.Context, next) => {
     ctx.body = { message: e.message };
     ctx.res.statusCode = 500;
   }
-})
+});
 
 app.use(router.routes());
 

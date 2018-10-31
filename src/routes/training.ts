@@ -3,7 +3,7 @@ import { Context } from 'koa';
 
 const training = new Router();
 
-training.get('/noList', async (ctx: Context) => {
+training.get('/noList', (ctx: Context) => {
   ctx.body = [{
     id: 0,
     no: 'A'
@@ -13,7 +13,7 @@ training.get('/noList', async (ctx: Context) => {
   }];
 });
 
-training.get('/problemList/:pageId', async (ctx: Context) => {
+training.get('/problemList/:pageId', (ctx: Context) => {
   ctx.body = [{
     id: 101,
     no: 'A00',

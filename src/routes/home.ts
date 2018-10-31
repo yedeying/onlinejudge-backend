@@ -1,6 +1,6 @@
 import { Context } from 'koa';
 
-export const home = async (ctx: Context) => {
+export const home = (ctx: Context) => {
   ctx.body = {
     message: 'welcome'
   };

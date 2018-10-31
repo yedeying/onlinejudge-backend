@@ -1,22 +1,39 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",
-    "target": "es2017",
-    "lib": ["ESNext"],
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "outDir": "dist",
     "baseUrl": ".",
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
+    "lib": [
+      "esnext",
+      "es2017.object"
+    ],
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "newLine": "lf",
+    "removeComments": true,
+    "rootDir": "src",
+    "outDir": "dist",
+    "sourceMap": true,
+    "target": "esnext",
     "paths": {
       "*": [
         "node_modules/*",
         "src/types/*"
       ]
-    }
+    },
+
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true
   },
   "include": [
     "src/**/*"

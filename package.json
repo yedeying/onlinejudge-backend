@@ -8,7 +8,19 @@
     "watch:compile": "tsc -w",
     "start": "tsc && node dist/index.js",
     "build": "tsc",
-    "watch": "nodemon dist/index.js"
+    "watch": "nodemon dist/index.js",
+    "lint": "eslint --ext=.ts src",
+    "lint:fix": "yarn lint --fix",
+    "commit": "git-cz"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "{src}/**/*.{ts}": "eslint"
   },
   "keywords": [
     "koa",
@@ -17,16 +29,16 @@
   "author": "yedeying",
   "license": "ISC",
   "dependencies": {
-    "koa": "^2.5.2",
+    "koa": "^2.6.1",
     "koa-bodyparser": "^4.2.1",
     "koa-csrf": "^3.0.6",
     "koa-json": "^2.0.2",
     "koa-json-error": "^3.1.2",
     "koa-logger": "^3.2.0",
-    "koa-mount": "^3.0.0",
+    "koa-mount": "^4.0.0",
     "koa-passport": "^4.1.1",
     "koa-router": "^7.4.0",
-    "koa-session": "^5.9.0",
+    "koa-session": "^5.10.0",
     "koa-static": "^5.0.0",
     "mysql": "^2.16.0"
   },
@@ -35,20 +47,27 @@
     "url": "git+https://github.com/yedeying999/onlinejudge-backend"
   },
   "devDependencies": {
+    "@commitlint/cli": "^7.2.1",
+    "@commitlint/config-conventional": "^7.1.2",
     "@types/koa": "^2.0.46",
     "@types/koa-bodyparser": "^5.0.1",
     "@types/koa-csrf": "^3.0.1",
     "@types/koa-json": "^2.0.18",
     "@types/koa-json-error": "^3.1.2",
-    "@types/koa-logger": "^3.1.0",
+    "@types/koa-logger": "^3.1.1",
     "@types/koa-mount": "^3.0.1",
     "@types/koa-passport": "^4.0.2",
-    "@types/koa-router": "^7.0.31",
+    "@types/koa-router": "^7.0.32",
     "@types/koa-session": "^5.7.4",
     "@types/koa-static": "^4.0.0",
     "@types/mysql": "^2.15.5",
-    "nodemon": "^1.18.4",
+    "eslint": "^5.8.0",
+    "eslint-config-standard-ye": "^1.0.14",
+    "eslint-config-standard-ye-ts": "^1.0.3",
+    "husky": "^1.1.2",
+    "lint-staged": "^8.0.3",
+    "nodemon": "^1.18.5",
     "ts-node": "^7.0.1",
-    "typescript": "^3.0.3"
+    "typescript": "^3.1.4"
   }
 }
