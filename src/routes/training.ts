@@ -1,9 +1,8 @@
 import * as Router from 'koa-router';
-import { Context } from 'koa';
 
 const training = new Router();
 
-training.get('/noList', (ctx: Context) => {
+training.get('/noList', (ctx: Router.IRouterContext) => {
   ctx.body = [{
     id: 0,
     no: 'A'
@@ -13,7 +12,7 @@ training.get('/noList', (ctx: Context) => {
   }];
 });
 
-training.get('/problemList/:pageId', (ctx: Context) => {
+training.get('/problemList/:pageId', (ctx: Router.IRouterContext) => {
   ctx.body = [{
     id: 101,
     no: 'A00',

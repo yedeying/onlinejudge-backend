@@ -10,7 +10,7 @@
     "build": "tsc",
     "watch": "nodemon dist/index.js",
     "lint": "eslint --ext=.ts src",
-    "lint:fix": "yarn lint --fix",
+    "lint:fix": "yarn lint --fix && git add -A",
     "commit": "git-cz"
   },
   "husky": {
@@ -20,7 +20,12 @@
     }
   },
   "lint-staged": {
-    "{src}/**/*.{ts}": "eslint"
+    "src/**/*.ts": "eslint"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   },
   "keywords": [
     "koa",
@@ -61,6 +66,8 @@
     "@types/koa-session": "^5.7.4",
     "@types/koa-static": "^4.0.0",
     "@types/mysql": "^2.15.5",
+    "commitizen": "^3.0.4",
+    "cz-conventional-changelog": "^2.1.0",
     "eslint": "^5.8.0",
     "eslint-config-standard-ye": "^1.0.14",
     "eslint-config-standard-ye-ts": "^1.0.3",
