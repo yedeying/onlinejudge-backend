@@ -27,12 +27,20 @@
       "path": "cz-conventional-changelog"
     }
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yedeying999/onlinejudge-backend"
+  },
   "keywords": [
     "koa",
     "onlinejudge"
   ],
   "author": "yedeying",
-  "license": "ISC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yedeying999/onlinejudge-backend/issues"
+  },
+  "homepage": "https://github.com/yedeying999/onlinejudge-backend#readme",
   "dependencies": {
     "koa": "^2.6.1",
     "koa-bodyparser": "^4.2.1",
@@ -46,10 +54,6 @@
     "koa-session": "^5.10.0",
     "koa-static": "^5.0.0",
     "mysql": "^2.16.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/yedeying999/onlinejudge-backend"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.2.1",
