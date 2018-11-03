@@ -4,11 +4,11 @@ const training = new Router();
 
 training.get('/noList', (ctx: Router.IRouterContext) => {
   ctx.body = [{
-    id: 0,
-    no: 'A'
+    id: 'A',
+    title: 'A'
   }, {
-    id: 0,
-    no: 'B'
+    id: 'B',
+    title: 'B'
   }];
 });
 

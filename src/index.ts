@@ -4,6 +4,7 @@ import * as json from 'koa-json';
 import * as session from 'koa-session';
 import * as logger from 'koa-logger';
 import * as CSRF from 'koa-csrf';
+import * as cors from '@koa/cors';
 import * as error from 'koa-json-error';
 import router from './routes';
 import config from './config';
@@ -22,6 +23,9 @@ app.use(json({ pretty: false, param: 'pretty' }));
 // session
 app.keys = [config.site.secret];
 app.use(session(app));
+
+// cors
+app.use(cors());
 
 // csrf
 app.use(new CSRF({
