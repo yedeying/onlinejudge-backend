@@ -5,25 +5,36 @@ import * as utils from './utils';
 
 type UUID = string;
 
-export interface Problem {
+export interface ProblemListItem {
   id: UUID;
   no: string;
   title: string;
-  description: string;
-  timeLimit: number;
-  memoryLimit: number;
-  judger: UUID;
   volume: number;
+  number: number;
   tags: string[];
-  dataSet: UUID;
   createAt: Date;
   updatedAt: Date;
 }
 
+export interface ProblemDetail {
+  description: string;
+  timeLimit: number;
+  memoryLimit: number;
+  judger: UUID;
+  dataSet: UUID;
+}
+
+export interface ProblemPage {
+  id: string;
+  title: string;
+}
+
+export interface Problem extends ProblemListItem, ProblemDetail {}
+
 export default class ProblemList {
   private validator = new Validator();
 
-  async getNoList() {
+  async getNoList(): Promise<ProblemPage[]> {
     const volumes: { volume: number }[] = await query(
       'select distinct volume from ?? order by volume', [tables.problem]
     );
@@ -36,15 +47,15 @@ export default class ProblemList {
     });
   }
 
-  async getProblemListByPage(pageId: string) {
+  async getProblemListByPage(pageId: string): Promise<ProblemListItem[]> {
     this.validator.pageId(pageId);
     const volume = utils.alphaToNum(pageId);
-    const res = await query('select * from ?? where volume = ?', [tables.problem, volume]);
-    const problems = res.map(row => ({
+    const fields: (keyof ProblemListItem)[] = ['id', 'title', 'volume', 'number', 'tags'];
+    const res = await query(`select ${fields.join(', ')} from ?? where volume = ?`, [tables.problem, volume]);
+    return res.map(row => ({
       ...row,
       no: utils.formatNo(row.volume, row.number),
       tags: row.tags.split(',').filter((x: string) => x)
     }));
-    return problems;
   }
 }
