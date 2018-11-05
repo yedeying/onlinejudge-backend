@@ -6,6 +6,7 @@ import * as logger from 'koa-logger';
 import * as CSRF from 'koa-csrf';
 import * as cors from '@koa/cors';
 import * as error from 'koa-json-error';
+import KoaError from './lib/error';
 import router from './routes';
 import config from './config';
 
@@ -51,8 +52,13 @@ app.use(async (ctx: Koa.Context, next) => {
   try {
     await next();
   } catch (e) {
-    ctx.body = { message: e.message };
-    ctx.res.statusCode = 500;
+    if (e instanceof KoaError) {
+      ctx.body = { message: e.message, ...e.options };
+      ctx.res.statusCode = e.options.statusCode;
+    } else {
+      ctx.body = { message: e.message };
+      ctx.res.statusCode = 500;
+    }
   }
 });
 

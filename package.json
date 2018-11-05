@@ -54,7 +54,8 @@
     "koa-router": "^7.4.0",
     "koa-session": "^5.10.0",
     "koa-static": "^5.0.0",
-    "mysql": "^2.16.0"
+    "mysql": "^2.16.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.2.1",
