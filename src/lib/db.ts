@@ -1,35 +1,41 @@
-import { createConnection } from 'mysql';
+import { createPool, MysqlError } from 'mysql';
 import dbConfig from '../config/db';
 
-export interface DbInstance {
-  query: (sql: string, values?: any) => Promise<any[]>;
-  end: () => void;
-}
+const pool = createPool({
+  ...dbConfig,
+  connectionLimit: 20
+});
 
-export const initDb = (): DbInstance => {
-  const connection = createConnection(dbConfig);
-  connection.connect();
-  return {
-    query: (sql: string, values?: any) => new Promise((resolve, reject) => {
-      const query = connection.query(sql, values, (err, results) => {
-        const sql = query.sql;
-        if (err) {
-          if (sql) {
-            err.sql = sql;
-          }
-          reject(err);
+export const query = (sql: string, values?: any): Promise<any[]> => new Promise((resolve, reject) => {
+  pool.getConnection((err, connection) => {
+    const handleError = (err: MysqlError | null | undefined, sql?: string) => {
+      if (err) {
+        if (sql) {
+          Object.defineProperty(err, 'sql', {
+            value: sql,
+            enumerable: false,
+            configurable: false,
+            writable: false
+          });
         }
-        results && sql && Object.defineProperty(results, 'sql', {
-          configurable: true,
-          enumerable: false,
-          writable: true,
-          value: sql
-        });
-        resolve(results);
-      });
-    }),
-    end: () => connection.end()
-  };
-};
+        connection && connection.release();
+        reject(err);
+      }
+    };
 
-export default initDb;
+    handleError(err);
+    const query = connection.query(sql, values, (err, results) => {
+      handleError(err, query.sql);
+      results && sql && Object.defineProperty(results, 'sql', {
+        value: sql,
+        enumerable: false,
+        configurable: false,
+        writable: false
+      });
+      connection && connection.release();
+      resolve(results);
+    });
+  });
+});
+
+export default query;
