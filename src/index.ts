@@ -9,6 +9,7 @@ import * as error from 'koa-json-error';
 import KoaError from './lib/error';
 import router from './routes';
 import config from './config';
+import { StatusCode, ErrorCode } from './common/constants';
 
 export const app = new Koa();
 
@@ -43,8 +44,8 @@ app.use(error({
   format: (err: any) => ({
     code: err.code,
     status: err.status,
-    message: err.message
-    // stack: err.stack,
+    message: err.message,
+    stack: err.stack
   })
 }));
 
@@ -54,11 +55,14 @@ app.use(async (ctx: Koa.Context, next) => {
   } catch (e) {
     if (e instanceof KoaError) {
       ctx.body = { message: e.message, ...e.options };
-      ctx.res.statusCode = e.options.statusCode;
     } else {
-      ctx.body = { message: e.message };
-      ctx.res.statusCode = 500;
+      ctx.body = {
+        message: e.message,
+        statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+        code: ErrorCode.SERVER_ERROR
+      };
     }
+    ctx.res.statusCode = ctx.body.statusCode || StatusCode.OK;
   }
 });
 

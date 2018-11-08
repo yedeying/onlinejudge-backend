@@ -1,3 +1,5 @@
+import { IVolume, IProblemOrder, IProblemNo } from '../../common/types';
+
 export const numToAlpha = (index: number): string => {
   let base = index;
   const resArr: number[] = [];
@@ -36,6 +38,6 @@ export const keepDigit = (num: number, digit: number = num.toString().length): s
   return res;
 };
 
-export const formatNo = (volume: number, num: number): string => {
+export const formatNo = (volume: IVolume, num: IProblemOrder): IProblemNo => {
   return numToAlpha(volume) + keepDigit(num, 2);
 };

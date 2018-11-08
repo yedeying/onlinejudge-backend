@@ -1,21 +1,20 @@
-import KoaError, { ErrorOption } from './error';
+import KoaError from './error';
+import { ErrorOption } from '../common/types';
+import { ErrorCode, StatusCode } from '../common/constants';
 
 const validateError: ErrorOption = {
-  code: 1,
-  statusCode: 422
-};
-
-export const assert = (check: boolean | boolean[], msg: string, option: Partial<ErrorOption> = validateError) => {
-  if (Array.isArray(check)) {
-    check = check.every(subCheck => subCheck);
-  }
-  if (!check) {
-    throw new KoaError(msg, option);
-  }
+  code: ErrorCode.PARAMS_INVALID,
+  statusCode: StatusCode.UNPROCESSABLE_ENTITY
 };
 
 export default class Validator {
-  pageId(pageId: string) {
-    assert(typeof pageId === 'string', 'expect pageId to be a string');
+  protected assert(check: boolean | boolean[], msg: string, option: Partial<ErrorOption> = validateError): true {
+    if (Array.isArray(check)) {
+      check = check.every(subCheck => subCheck);
+    }
+    if (!check) {
+      throw new KoaError(msg, option);
+    }
+    return true;
   }
 }
