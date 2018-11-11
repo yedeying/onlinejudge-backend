@@ -4,9 +4,9 @@ import ProblemDetail from '../models/problemDetail';
 
 const training = new Router();
 
-training.get('/noList', async (ctx: Router.IRouterContext) => {
+training.get('/pageList', async (ctx: Router.IRouterContext) => {
   const problemList = new ProblemList();
-  ctx.body = await problemList.getNoList();
+  ctx.body = await problemList.getPageList();
 });
 
 training.get('/problemList/:pageId', async (ctx: Router.IRouterContext) => {

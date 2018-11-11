@@ -12,13 +12,13 @@ class Validator extends BaseValidator {
 export default class ProblemList {
   private validator = new Validator();
 
-  async getNoList(): Promise<IProblemPage[]> {
+  async getPageList(): Promise<IProblemPage[]> {
     const volumes = await allVolumes();
     return volumes.map(volume => {
-      const no = utils.numToAlpha(volume);
+      const page = utils.numToAlpha(volume);
       return {
-        id: no,
-        title: no
+        id: page,
+        text: page
       };
     });
   }

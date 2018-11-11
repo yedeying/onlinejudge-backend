@@ -18,7 +18,7 @@ export interface IProblemListItem {
 
 export interface IProblemPage {
   id: string;
-  title: string;
+  text: string;
 }
 
 export interface IProblem extends IProblemListItem {
