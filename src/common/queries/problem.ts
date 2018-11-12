@@ -10,7 +10,7 @@ export const allVolumes = queryAll<IVolume>(() => ({
 }));
 
 export const problemListByPage = queryAll<IProblemListItem, [IVolume]>(volume => ({
-  sql: 'select {fields} from ?? where volume = ?',
+  sql: 'select {fields} from ?? where volume = ? order by number',
   params: [tables.problem, volume],
   fields: ['id', 'title', 'volume', 'number', 'tags'],
   mapper: row => ({
