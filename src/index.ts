@@ -9,6 +9,7 @@ import * as error from 'koa-json-error';
 import KoaError from './lib/error';
 import router from './routes';
 import config from './config';
+import passport from './middlewares/passport';
 import { StatusCode, ErrorCode } from './common/constants';
 
 export const app = new Koa();
@@ -22,9 +23,41 @@ app.use(bodyParser());
 // jsonResponse
 app.use(json({ pretty: false, param: 'pretty' }));
 
+// error parser
+app.use(error({
+  format: (err: any) => ({
+    code: err.code,
+    status: err.status,
+    message: err.message,
+    stack: err.stack
+  })
+}));
+
+app.use(async (ctx, next) => {
+  try {
+    await next();
+  } catch (e) {
+    console.log(e);
+    if (e instanceof KoaError) {
+      ctx.body = { message: e.message, ...e.options };
+    } else {
+      ctx.body = {
+        message: e.message,
+        statusCode: StatusCode.INTERNAL_SERVER_ERROR,
+        code: ErrorCode.SERVER_ERROR
+      };
+    }
+    ctx.res.statusCode = ctx.body.statusCode || StatusCode.OK;
+  }
+});
+
 // session
 app.keys = [config.site.secret];
 app.use(session(app));
+
+// passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // cors
 app.use(cors());
@@ -38,33 +71,6 @@ app.use(new CSRF({
   excludedMethods: ['GET', 'HEAD', 'OPTIONS'],
   disableQuery: false
 }));
-
-// error parser
-app.use(error({
-  format: (err: any) => ({
-    code: err.code,
-    status: err.status,
-    message: err.message,
-    stack: err.stack
-  })
-}));
-
-app.use(async (ctx: Koa.Context, next) => {
-  try {
-    await next();
-  } catch (e) {
-    if (e instanceof KoaError) {
-      ctx.body = { message: e.message, ...e.options };
-    } else {
-      ctx.body = {
-        message: e.message,
-        statusCode: StatusCode.INTERNAL_SERVER_ERROR,
-        code: ErrorCode.SERVER_ERROR
-      };
-    }
-    ctx.res.statusCode = ctx.body.statusCode || StatusCode.OK;
-  }
-});
 
 app.use(router.routes());
 

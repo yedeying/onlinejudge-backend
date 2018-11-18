@@ -320,7 +320,7 @@
 
 "@types/koa-passport@^4.0.2":
   version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@types/koa-passport/-/koa-passport-4.0.2.tgz#a0277352538f12e7bef2b9991475861eb6938ae9"
+  resolved "http://registry.npm.taobao.org/@types/koa-passport/download/@types/koa-passport-4.0.2.tgz#a0277352538f12e7bef2b9991475861eb6938ae9"
   dependencies:
     "@types/koa" "*"
     "@types/passport" "*"
@@ -382,9 +382,26 @@
   version "10.12.1"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.1.tgz#da61b64a2930a80fa708e57c45cd5441eb379d5b"
 
+"@types/passport-local@^1.0.33":
+  version "1.0.33"
+  resolved "http://registry.npm.taobao.org/@types/passport-local/download/@types/passport-local-1.0.33.tgz#d245b60c5b801cb3aeca1ffab557d5fe1534260d"
+  integrity sha1-0kW2DFuAHLOuyh/6tVfV/hU0Jg0=
+  dependencies:
+    "@types/express" "*"
+    "@types/passport" "*"
+    "@types/passport-strategy" "*"
+
+"@types/passport-strategy@*":
+  version "0.2.35"
+  resolved "http://registry.npm.taobao.org/@types/passport-strategy/download/@types/passport-strategy-0.2.35.tgz#e52f5212279ea73f02d9b06af67efe9cefce2d0c"
+  integrity sha1-5S9SEieepz8C2bBq9n7+nO/OLQw=
+  dependencies:
+    "@types/express" "*"
+    "@types/passport" "*"
+
 "@types/passport@*":
-  version "0.4.6"
-  resolved "https://registry.yarnpkg.com/@types/passport/-/passport-0.4.6.tgz#1c6a1a3fd105e9354816e179c5c9cd13852864d1"
+  version "0.4.7"
+  resolved "http://registry.npm.taobao.org/@types/passport/download/@types/passport-0.4.7.tgz#2b7f29bf61df91cf77023b3777e940b613d4b4d8"
   dependencies:
     "@types/express" "*"
 
@@ -2594,7 +2611,7 @@ koa-mount@^4.0.0:
 
 koa-passport@^4.1.1:
   version "4.1.1"
-  resolved "https://registry.yarnpkg.com/koa-passport/-/koa-passport-4.1.1.tgz#4ad1f5296c933244a7a2591b60c724c5f8bf842a"
+  resolved "http://registry.npm.taobao.org/koa-passport/download/koa-passport-4.1.1.tgz#4ad1f5296c933244a7a2591b60c724c5f8bf842a"
   dependencies:
     passport "^0.4.0"
 
@@ -3431,6 +3448,13 @@ parseurl@^1.3.2:
 pascalcase@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
+
+passport-local@^1.0.0:
+  version "1.0.0"
+  resolved "http://registry.npm.taobao.org/passport-local/download/passport-local-1.0.0.tgz#1fe63268c92e75606626437e3b906662c15ba6ee"
+  integrity sha1-H+YyaMkudWBmJkN+O5BmYsFbpu4=
+  dependencies:
+    passport-strategy "1.x.x"
 
 passport-strategy@1.x.x:
   version "1.0.0"

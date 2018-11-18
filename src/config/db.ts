@@ -6,5 +6,6 @@ export default {
 };
 
 export const tables = {
-  problem: 'problem'
+  problem: 'problem',
+  user: 'user'
 };

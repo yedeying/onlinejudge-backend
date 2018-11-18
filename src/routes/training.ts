@@ -4,18 +4,18 @@ import ProblemDetail from '../models/problemDetail';
 
 const training = new Router();
 
-training.get('/pageList', async (ctx: Router.IRouterContext) => {
+training.get('/pageList', async ctx => {
   const problemList = new ProblemList();
   ctx.body = await problemList.getPageList();
 });
 
-training.get('/problemList/:pageId', async (ctx: Router.IRouterContext) => {
+training.get('/problemList/:pageId', async ctx => {
   const problemList = new ProblemList();
   const { pageId } = ctx.params;
   ctx.body = await problemList.getProblemListByPage(pageId);
 });
 
-training.get('/problem/:problemNo', async (ctx: Router.IRouterContext) => {
+training.get('/problem/:problemNo', async ctx => {
   const problemDetail = new ProblemDetail();
   const { problemNo } = ctx.params;
   ctx.body = await problemDetail.getProblemDetail(problemNo);
