@@ -8,7 +8,6 @@
     "watch:compile": "tsc -w",
     "start": "tsc && node dist/index.js",
     "build": "tsc",
-    "watch": "nodemon dist/index.js",
     "lint": "eslint --ext=.ts src",
     "lint:fix": "yarn lint --fix && git add -A",
     "commit": "git-cz"
@@ -82,7 +81,6 @@
     "eslint-config-standard-ye-ts": "^1.0.3",
     "husky": "^1.1.2",
     "lint-staged": "^8.0.3",
-    "nodemon": "^1.18.5",
     "ts-node": "^7.0.1",
     "typescript": "^3.1.4"
   }
