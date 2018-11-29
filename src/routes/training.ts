@@ -1,6 +1,6 @@
 import * as Router from 'koa-router';
-import ProblemList from '../models/problemList';
-import ProblemDetail from '../models/problemDetail';
+import ProblemList from '$models/problemList';
+import ProblemDetail from '$models/problemDetail';
 
 const training = new Router();
 

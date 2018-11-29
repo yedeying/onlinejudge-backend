@@ -1,4 +1,4 @@
-import { IVolume, IProblemOrder, IProblemNo } from '../../common/types';
+import { IVolume, IProblemOrder, IProblemNo } from '$types';
 
 export const numToAlpha = (index: number): string => {
   let base = index;

@@ -1,10 +1,11 @@
 import * as Koa from 'koa';
 import * as bodyParser from 'koa-bodyparser';
 import * as json from 'koa-json';
-import * as session from 'koa-session';
+import * as session from 'koa-generic-session';
 import * as logger from 'koa-logger';
-import * as CSRF from 'koa-csrf';
+// import * as CSRF from 'koa-csrf';
 import * as cors from '@koa/cors';
+import * as redisStore from 'koa-redis';
 import * as error from 'koa-json-error';
 import KoaError from './lib/error';
 import router from './routes';
@@ -53,7 +54,9 @@ app.use(async (ctx, next) => {
 
 // session
 app.keys = [config.site.secret];
-app.use(session(app));
+app.use(session({
+  store: redisStore(config.redis)
+}));
 
 // passport
 app.use(passport.initialize());
@@ -63,14 +66,14 @@ app.use(passport.session());
 app.use(cors());
 
 // csrf
-app.use(new CSRF({
-  invalidSessionSecretMessage: 'Invalid session secret',
-  invalidSessionSecretStatusCode: 403,
-  invalidTokenMessage: 'Invalid CSRF token',
-  invalidTokenStatusCode: 403,
-  excludedMethods: ['GET', 'HEAD', 'OPTIONS'],
-  disableQuery: false
-}));
+// app.use(new CSRF({
+//   invalidSessionSecretMessage: 'Invalid session secret',
+//   invalidSessionSecretStatusCode: 403,
+//   invalidTokenMessage: 'Invalid CSRF token',
+//   invalidTokenStatusCode: 403,
+//   excludedMethods: ['GET', 'HEAD', 'OPTIONS'],
+//   disableQuery: false
+// }));
 
 app.use(router.routes());
 

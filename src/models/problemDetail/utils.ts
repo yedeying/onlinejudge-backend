@@ -1,7 +1,7 @@
 import { alphaToNum } from '../problemList/utils';
-import { problemIdFromNo } from '../../common/queries/problem';
-import { IProblemId, IProblemNo } from '../../common/types';
-import * as patterns from '../../common/regexp';
+import { problemIdFromNo } from '$queries/problem';
+import { IProblemId, IProblemNo } from '$types';
+import * as patterns from '$regexp';
 
 export const parseProblemId = async (problemNo: IProblemNo): Promise<IProblemId | null> => {
   const match = problemNo.match(patterns.problemNo);

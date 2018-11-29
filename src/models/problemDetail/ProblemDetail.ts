@@ -1,9 +1,9 @@
 import { parseProblemId } from './utils';
-import BaseValidator from '../../lib/validator';
-import * as patterns from '../../common/regexp';
-import * as queries from '../../common/queries';
-import { IProblem, IProblemNo, IProblemId } from '../../common/types';
-import { FakeError, ErrorCode, StatusCode } from '../../common/constants';
+import BaseValidator from '$lib/validator';
+import * as patterns from '$regexp';
+import * as queries from '$queries';
+import { IProblem, IProblemNo, IProblemId } from '$types';
+import { FakeError, ErrorCode, StatusCode } from '$constants';
 
 class Validator extends BaseValidator {
   problemNo(problemNo: string): problemNo is IProblemNo {

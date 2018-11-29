@@ -1,5 +1,5 @@
-import { ErrorCode, StatusCode } from '../common/constants';
-import { ErrorOption } from '../common/types';
+import { ErrorCode, StatusCode } from '$constants';
+import { ErrorOption } from '$types';
 
 export default class KoaError extends Error {
   public options: ErrorOption = { code: ErrorCode.PARAMS_INVALID, statusCode: StatusCode.OK };

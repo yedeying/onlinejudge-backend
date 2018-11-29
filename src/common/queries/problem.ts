@@ -1,6 +1,6 @@
-import { IProblemId, IVolume, IProblemOrder, IProblem, IProblemListItem } from '../types';
-import { tables } from '../../config/db';
-import { formatNo } from '../../models/problemList/utils';
+import { IProblemId, IVolume, IProblemOrder, IProblem, IProblemListItem } from '$types';
+import { tables } from '$config/db';
+import { formatNo } from '$models/problemList/utils';
 import { queryAll, queryOne } from './utils';
 
 export const allVolumes = queryAll<IVolume>(() => ({

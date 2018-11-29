@@ -1,9 +1,9 @@
 import * as passport from 'koa-passport';
 import { Strategy } from 'passport-local';
-import User from '../models/user';
-import KoaError from '../lib/error';
-import { IUser } from '../common/types';
-import { ErrorCode, StatusCode } from '../common/constants';
+import User from '$models/user';
+import KoaError from '$lib/error';
+import { IUser } from '$types';
+import { ErrorCode, StatusCode } from '$constants';
 
 passport.serializeUser((user: IUser, done) => {
   done(null, user.id);

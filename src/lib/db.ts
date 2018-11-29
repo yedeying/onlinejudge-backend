@@ -1,5 +1,5 @@
 import { createPool, MysqlError } from 'mysql';
-import dbConfig from '../config/db';
+import dbConfig from '$config/db';
 
 const pool = createPool({
   ...dbConfig,

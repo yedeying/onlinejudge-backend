@@ -1,6 +1,6 @@
 import KoaError from './error';
-import { ErrorOption } from '../common/types';
-import { ErrorCode, StatusCode } from '../common/constants';
+import { ErrorOption } from '$types';
+import { ErrorCode, StatusCode } from '$constants';
 
 const validateError: ErrorOption = {
   code: ErrorCode.PARAMS_INVALID,

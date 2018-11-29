@@ -1,4 +1,4 @@
-import { ErrorCode, StatusCode } from '../constants';
+import { ErrorCode, StatusCode } from '$constants';
 
 export type UUID = string;
 
@@ -19,3 +19,5 @@ export interface ErrorOption {
   code: ErrorCode;
   statusCode: StatusCode;
 }
+
+export type ReqBody = { [s: string]: any } | null | undefined;

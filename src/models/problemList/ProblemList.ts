@@ -1,6 +1,6 @@
-import BaseValidator from '../../lib/validator';
-import { IProblemPage, IProblemListItem } from '../../common/types';
-import { allVolumes, problemListByPage } from '../../common/queries';
+import BaseValidator from '$lib/validator';
+import { IProblemPage, IProblemListItem } from '$types';
+import { allVolumes, problemListByPage } from '$queries';
 import * as utils from './utils';
 
 class Validator extends BaseValidator {

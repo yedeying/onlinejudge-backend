@@ -1,7 +1,7 @@
-import { query } from '../../lib/db';
-import KoaError from '../../lib/error';
-import { IQueryParams } from '../types';
-import { ErrorCode, StatusCode } from '../constants';
+import { query } from '$lib/db';
+import KoaError from '$lib/error';
+import { IQueryParams } from '$types';
+import { ErrorCode, StatusCode } from '$constants';
 
 export const queryAll = <T, S extends any[] = []>(paramsHandler: (...args: S) => IQueryParams<T>) =>
   async (...args: S): Promise<T[]> => {

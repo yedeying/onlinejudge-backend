@@ -1,6 +1,6 @@
 import { queryOne } from './utils';
-import { tables } from '../../config/db';
-import { IUser } from '../types';
+import { tables } from '$config/db';
+import { IUser } from '$types';
 
 export const fetchUserByName = queryOne<IUser, [string]>(username => ({
   sql: 'select * from ?? where username = ?',

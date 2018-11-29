@@ -17,3 +17,9 @@ export interface IUser extends IUserInfo {
   password: string;
   salt: string;
 }
+
+export interface ILoginInfo {
+  username: string;
+  password: string;
+  email?: string;
+}
