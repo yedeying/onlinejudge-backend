@@ -1,6 +1,6 @@
 import * as patterns from '$regexp';
 import * as queries from '$queries';
-import { ReqBody, ILoginInfo } from '$types';
+import { ReqBody, ILoginInfo, IRegisterInfo } from '$types';
 import BaseValidator from '$lib/validator';
 
 class Validator extends BaseValidator {
@@ -26,8 +26,17 @@ class Validator extends BaseValidator {
     }
     this.username(loginInfo.username);
     this.password(loginInfo.password);
-    if (loginInfo.email) {
-      this.email(loginInfo.email);
+    return true;
+  }
+
+  registerInfo(registerInfo: ReqBody): registerInfo is IRegisterInfo {
+    if (!registerInfo) {
+      return false;
+    }
+    this.username(registerInfo.username);
+    this.password(registerInfo.password);
+    if (registerInfo.email) {
+      this.email(registerInfo.email);
     }
     return true;
   }
@@ -47,7 +56,10 @@ export default class User {
     return {};
   }
 
-  register() {
+  register(registerInfo: ReqBody) {
+    if (!this.validator.registerInfo(registerInfo)) {
+      return {};
+    }
     return {};
   }
 

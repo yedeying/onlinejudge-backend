@@ -6,51 +6,24 @@ import * as logger from 'koa-logger';
 // import * as CSRF from 'koa-csrf';
 import * as cors from '@koa/cors';
 import * as redisStore from 'koa-redis';
-import * as error from 'koa-json-error';
-import KoaError from './lib/error';
 import router from './routes';
 import config from './config';
 import passport from './middlewares/passport';
-import { StatusCode, ErrorCode } from './common/constants';
+import formatter from './middlewares/formatter';
 
 export const app = new Koa();
 
 // logger
 app.use(logger());
 
+// formatter
+app.use(formatter);
+
 // bodyParser
 app.use(bodyParser());
 
 // jsonResponse
 app.use(json({ pretty: false, param: 'pretty' }));
-
-// error parser
-app.use(error({
-  format: (err: any) => ({
-    code: err.code,
-    status: err.status,
-    message: err.message,
-    stack: err.stack
-  })
-}));
-
-app.use(async (ctx, next) => {
-  try {
-    await next();
-  } catch (e) {
-    console.log(e);
-    if (e instanceof KoaError) {
-      ctx.body = { message: e.message, ...e.options };
-    } else {
-      ctx.body = {
-        message: e.message,
-        statusCode: StatusCode.INTERNAL_SERVER_ERROR,
-        code: ErrorCode.SERVER_ERROR
-      };
-    }
-    ctx.res.statusCode = ctx.body.statusCode || StatusCode.OK;
-  }
-});
 
 // session
 app.keys = [config.site.secret];

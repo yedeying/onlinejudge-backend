@@ -301,12 +301,6 @@
   dependencies:
     "@types/koa" "*"
 
-"@types/koa-json-error@^3.1.2":
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/@types/koa-json-error/-/koa-json-error-3.1.2.tgz#4dc99d25b3e036e85646e823af6b1e313d68d942"
-  dependencies:
-    "@types/koa" "*"
-
 "@types/koa-json@^2.0.18":
   version "2.0.18"
   resolved "https://registry.yarnpkg.com/@types/koa-json/-/koa-json-2.0.18.tgz#1be8252bde478a774da42e0cd70aec83ca94a80a"
@@ -3286,13 +3280,6 @@ koa-is-json@1, koa-is-json@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/koa-is-json/-/koa-is-json-1.0.0.tgz#273c07edcdcb8df6a2c1ab7d59ee76491451ec14"
 
-koa-json-error@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/koa-json-error/-/koa-json-error-3.1.2.tgz#acad750c6739cb12cc4ea6c25f224d59b765abfe"
-  dependencies:
-    lodash.compact "^3.0.1"
-    lodash.curry "^4.1.1"
-
 koa-json@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/koa-json/-/koa-json-2.0.2.tgz#36af14e6ea1f5d646d7c44a285701c6f85a4fde4"
@@ -3536,14 +3523,6 @@ lodash._reinterpolate@~3.0.0:
 lodash.camelcase@4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz#b28aa6288a2b9fc651035c7711f65ab6190331a6"
-
-lodash.compact@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/lodash.compact/-/lodash.compact-3.0.1.tgz#540ce3837745975807471e16b4a2ba21e7256ca5"
-
-lodash.curry@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/lodash.curry/-/lodash.curry-4.1.1.tgz#248e36072ede906501d75966200a86dab8b23170"
 
 lodash.debounce@^4.0.8:
   version "4.0.8"

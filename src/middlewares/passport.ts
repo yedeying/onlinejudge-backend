@@ -16,7 +16,7 @@ passport.deserializeUser(async (id: string, done) => {
     if (user) {
       done(null, user);
     } else {
-      done(new KoaError('could not found user by id', {
+      done(new KoaError('Could not found user by id', {
         code: ErrorCode.PARAMS_INVALID,
         statusCode: StatusCode.UNAUTHORIZED
       }));
@@ -29,12 +29,19 @@ passport.deserializeUser(async (id: string, done) => {
 passport.use(new Strategy(async (username, password, done) => {
   const model = new User();
   const user = await model.getUserByName(username);
-  if (user && username === user.username &&
-    User.hashPassword(password, user.salt) === password) {
-    done(null, user);
-  } else {
-    done(null, false);
+  if (!user) {
+    return done(new KoaError('User Not Found', {
+      statusCode: StatusCode.UNAUTHORIZED,
+      code: ErrorCode.PARAMS_INVALID
+    }), null);
   }
+  if (User.hashPassword(password, user.salt) !== user.password) {
+    return done(new KoaError('Password incorrect', {
+      statusCode: StatusCode.UNAUTHORIZED,
+      code: ErrorCode.PARAMS_INVALID
+    }), null);
+  }
+  done(null, user);
 }));
 
 export default passport;

@@ -21,5 +21,8 @@ export interface IUser extends IUserInfo {
 export interface ILoginInfo {
   username: string;
   password: string;
+}
+
+export interface IRegisterInfo extends ILoginInfo {
   email?: string;
 }
