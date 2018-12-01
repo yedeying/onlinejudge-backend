@@ -28,7 +28,7 @@ export default async (ctx: Context, next: () => Promise<any>) => {
         code: ErrorCode.SERVER_ERROR
       };
     }
-    ctx.body.stack = e.stack;
+    // ctx.body.stack = e.stack;
     ctx.res.statusCode = ctx.body.statusCode || StatusCode.OK;
   }
 };

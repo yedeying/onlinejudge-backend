@@ -1,6 +1,7 @@
 import * as patterns from '$regexp';
 import * as queries from '$queries';
-import { ReqBody, ILoginInfo, IRegisterInfo } from '$types';
+import * as uuid from 'uuid/v4';
+import { ReqBody, IUser, IRegisterInfo } from '$types';
 import BaseValidator from '$lib/validator';
 
 class Validator extends BaseValidator {
@@ -20,16 +21,11 @@ class Validator extends BaseValidator {
     return this.assert(patterns.uuid.test(id), 'user id invalid');
   }
 
-  loginInfo(loginInfo: ReqBody): loginInfo is ILoginInfo {
-    if (!loginInfo) {
-      return false;
-    }
-    this.username(loginInfo.username);
-    this.password(loginInfo.password);
-    return true;
+  user(user: IUser | null): user is null {
+    return this.assert(!user, 'username has been registered');
   }
 
-  registerInfo(registerInfo: ReqBody): registerInfo is IRegisterInfo {
+  registerInfo(registerInfo: ReqBody): registerInfo is Omit<IRegisterInfo, 'salt'> {
     if (!registerInfo) {
       return false;
     }
@@ -49,18 +45,31 @@ export default class User {
     return password + salt;
   }
 
-  login(loginInfo: ReqBody) {
-    if (!this.validator.loginInfo(loginInfo)) {
-      return {};
-    }
-    return {};
-  }
-
-  register(registerInfo: ReqBody) {
+  async register(registerInfo: ReqBody, login: (user: IUser) => Promise<void>) {
     if (!this.validator.registerInfo(registerInfo)) {
       return {};
     }
-    return {};
+    const { username, password, email } = registerInfo;
+    const user = await this.getUserByName(username);
+    this.validator.user(user);
+
+    const salt = uuid();
+    const hashedPassword = User.hashPassword(password, salt);
+    const res = await queries.addUser({
+      username,
+      password: hashedPassword,
+      email,
+      salt
+    });
+    const { data } = res;
+    const insertId = data.id as string;
+    if (insertId) {
+      const user = await this.getUserById(insertId);
+      if (user) {
+        await login(user);
+      }
+    }
+    return 'Register successfully';
   }
 
   async getUserByName(username: string) {

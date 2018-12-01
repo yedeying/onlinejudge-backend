@@ -1,6 +1,6 @@
 import { query } from '$lib/db';
 import KoaError from '$lib/error';
-import { IQueryParams } from '$types';
+import { IInsertRes, IInsertParams, IQueryParams, IExecuteRes } from '$types';
 import { ErrorCode, StatusCode } from '$constants';
 
 export const queryAll = <T, S extends any[] = []>(paramsHandler: (...args: S) => IQueryParams<T>) =>
@@ -12,9 +12,9 @@ export const queryAll = <T, S extends any[] = []>(paramsHandler: (...args: S) =>
     }
     let res: any[] = [];
     try {
-      res = await query(parsedSql, params);
+      res = await query(parsedSql, params) as any[];
     } catch (e) {
-      throw new KoaError('server error', {
+      throw new KoaError(e.message || 'server error', {
         code: ErrorCode.SERVER_ERROR,
         statusCode: StatusCode.INTERNAL_SERVER_ERROR
       });
@@ -37,3 +37,17 @@ export const queryOne = <T, S extends any[]>(paramsHandler: (...args: S) => IQue
     return resArr.length ? resArr[0] : null;
   };
 };
+
+export const insert = <S extends any[]>(paramsHandler: (...args: S) => IInsertParams) =>
+  async (...args: S): Promise<IInsertRes> => {
+    const { table, data } = paramsHandler(...args);
+    const keys = Object.keys(data);
+    const sql = `insert into ?? set ` + keys.map(key => `${key} = ?`).join(', ');
+    const params = [table, ...keys.map(key => data[key])];
+    const res = await query(sql, params) as IExecuteRes;
+    return {
+      ...res,
+      table,
+      data
+    };
+  };

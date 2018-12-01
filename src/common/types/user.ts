@@ -24,5 +24,6 @@ export interface ILoginInfo {
 }
 
 export interface IRegisterInfo extends ILoginInfo {
+  salt: UUID;
   email?: string;
 }

@@ -8,7 +8,7 @@ const validateError: ErrorOption = {
 };
 
 export default class Validator {
-  protected assert(check: boolean | boolean[], msg: string, option: Partial<ErrorOption> = validateError): true {
+  assert(check: boolean | boolean[], msg: string, option: Partial<ErrorOption> = validateError): true {
     if (Array.isArray(check)) {
       check = check.every(subCheck => subCheck);
     }

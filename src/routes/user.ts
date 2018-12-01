@@ -49,8 +49,7 @@ user.post('/logout', async ctx => {
 user.post('/register', async ctx => {
   const registerInfo = ctx.request.body;
   const user = new User();
-  // todo
-  ctx.body = await user.register(registerInfo);
+  ctx.body = await user.register(registerInfo, user => ctx.login(user));
 });
 
 export default user;

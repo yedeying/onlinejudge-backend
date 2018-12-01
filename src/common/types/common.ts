@@ -2,6 +2,22 @@ import { ErrorCode, StatusCode } from '$constants';
 
 export type UUID = string;
 
+export interface IExecuteRes {
+  fieldCount: number;
+  affectedRows: number;
+  insertId?: number;
+  warningCount: number;
+  message: string;
+  changedRows: number;
+}
+
+export interface IInsertRes extends IExecuteRes, IInsertParams {}
+
+export interface IInsertParams {
+  table: string;
+  data: { [key: string]: string | number };
+}
+
 export interface IQueryParams<T> {
   // the sql for query with ?
   sql: string;
@@ -15,9 +31,14 @@ export interface IQueryParams<T> {
   mapper?: (item: any) => T;
 }
 
+interface DebugInfo {
+  sql?: string;
+}
+
 export interface ErrorOption {
   code: ErrorCode;
   statusCode: StatusCode;
+  extra?: DebugInfo;
 }
 
 export type ReqBody = { [s: string]: any } | null | undefined;
