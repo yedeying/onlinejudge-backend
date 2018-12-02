@@ -1,6 +1,7 @@
 import * as patterns from '$regexp';
 import * as queries from '$queries';
 import * as uuid from 'uuid/v4';
+import { sha1 } from '$utils';
 import { ReqBody, IUser, IRegisterInfo } from '$types';
 import BaseValidator from '$lib/validator';
 
@@ -42,7 +43,7 @@ export default class User {
   private validator = new Validator();
 
   static hashPassword(password: string, salt: string) {
-    return password + salt;
+    return sha1([password, '!@#$%^&*()', salt]);
   }
 
   async register(registerInfo: ReqBody, login: (user: IUser) => Promise<void>) {
