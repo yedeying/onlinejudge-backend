@@ -36,7 +36,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // cors
-app.use(cors());
+app.use(cors({
+  credentials: true
+}));
 
 // csrf
 // app.use(new CSRF({

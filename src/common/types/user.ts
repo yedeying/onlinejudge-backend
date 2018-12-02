@@ -7,8 +7,9 @@ export enum UserRole {
 
 export interface IUserInfo {
   username: string;
+  email: string;
   role: UserRole;
-  createAt: Date;
+  createdAt: Date;
   updatedAt: Date;
 }
 

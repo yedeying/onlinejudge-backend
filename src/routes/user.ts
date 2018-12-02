@@ -3,6 +3,8 @@ import User from '$models/user';
 import passport from '$middlewares/passport';
 import KoaError from '$lib/error';
 import { ErrorCode, StatusCode } from '$constants';
+import { pick } from '$utils';
+import { IUser } from '$types';
 
 const user = new Router();
 
@@ -10,7 +12,13 @@ user.get('/info', ctx => {
   if (ctx.isAuthenticated()) {
     ctx.body = {
       logStatus: true,
-      user: ctx.state.user
+      user: pick(ctx.state.user as IUser, [
+        'username',
+        'email',
+        'role',
+        'createdAt',
+        'updatedAt'
+      ])
     };
   } else {
     ctx.body = {
@@ -43,7 +51,9 @@ user.post('/login', async (ctx, next) => {
 
 user.post('/logout', async ctx => {
   await ctx.logout();
-  ctx.body = 'logout successfully';
+  ctx.body = {
+    user: ctx.state.user
+  };
 });
 
 user.post('/register', async ctx => {
