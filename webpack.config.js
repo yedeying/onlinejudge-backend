@@ -28,6 +28,7 @@ module.exports = (env = 'development') => ({
     extensions: ['.ts', '.js'],
     alias
   },
+  target: 'node',
   externals: [nodeExternals()],
   output: {
     filename: 'index.js',
