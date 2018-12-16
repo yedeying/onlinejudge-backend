@@ -3,6 +3,7 @@ import dbConfig from '$config/db';
 import { IExecuteRes, ErrorOption } from '$types';
 import KoaError from './error';
 import { ErrorCode, StatusCode } from '$constants';
+import { parseSql } from '$utils/query';
 
 const pool = createPool({
   ...dbConfig,
@@ -17,7 +18,7 @@ export const query = (sql: string, values?: any): Promise<any[] | IExecuteRes> =
         statusCode: StatusCode.INTERNAL_SERVER_ERROR
       };
       if (sql) {
-        errorOption.extra = { sql };
+        errorOption.extra = { sql: parseSql(sql) };
       }
       connection && connection.release();
       reject(new KoaError(err.message, errorOption));
@@ -34,7 +35,7 @@ export const query = (sql: string, values?: any): Promise<any[] | IExecuteRes> =
         return;
       }
       results && sql && Object.defineProperty(results, 'sql', {
-        value: sql,
+        value: parseSql(sql),
         enumerable: false,
         configurable: false,
         writable: false

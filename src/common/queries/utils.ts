@@ -1,11 +1,17 @@
 import { query } from '$lib/db';
 import KoaError from '$lib/error';
 import { IInsertRes, IInsertParams, IQueryParams, IExecuteRes } from '$types';
-import { ErrorCode, StatusCode } from '$constants';
+import { ErrorCode, StatusCode, EMPTY_RESULT } from '$constants';
 
-export const queryAll = <T, S extends any[] = []>(paramsHandler: (...args: S) => IQueryParams<T>) =>
-  async (...args: S): Promise<T[]> => {
-    const { sql, params = [], fields, pick, mapper } = paramsHandler(...args);
+export const queryAll = <T, S extends any[]=[]>(
+  paramsHandler: (...args: S) => IQueryParams<T> | typeof EMPTY_RESULT | Promise<IQueryParams<T> | typeof EMPTY_RESULT>
+) => {
+  return async (...args: S): Promise<T[]> => {
+    const config = await paramsHandler(...args);
+    if (config === EMPTY_RESULT) {
+      return [];
+    }
+    const { sql, params = [], fields, pick, mapper } = config;
     let parsedSql = sql;
     if (fields && sql.includes('{fields}')) {
       parsedSql = sql.replace('{fields}', fields.join(', '));
@@ -15,6 +21,7 @@ export const queryAll = <T, S extends any[] = []>(paramsHandler: (...args: S) =>
       res = await query(parsedSql, params) as any[];
     } catch (e) {
       throw new KoaError(e.message || 'server error', {
+        ...e.options,
         code: ErrorCode.SERVER_ERROR,
         statusCode: StatusCode.INTERNAL_SERVER_ERROR
       });
@@ -29,8 +36,11 @@ export const queryAll = <T, S extends any[] = []>(paramsHandler: (...args: S) =>
     }
     return res;
   };
+};
 
-export const queryOne = <T, S extends any[]>(paramsHandler: (...args: S) => IQueryParams<T>) => {
+export const queryOne = <T, S extends any[]>(
+  paramsHandler: (...args: S) => IQueryParams<T> | typeof EMPTY_RESULT | Promise<IQueryParams<T> | typeof EMPTY_RESULT>
+) => {
   const res = queryAll<T, S>(paramsHandler);
   return async (...args: S): Promise<T | null> => {
     const resArr = await res(...args);
@@ -38,8 +48,8 @@ export const queryOne = <T, S extends any[]>(paramsHandler: (...args: S) => IQue
   };
 };
 
-export const insert = <S extends any[]>(paramsHandler: (...args: S) => IInsertParams) =>
-  async (...args: S): Promise<IInsertRes> => {
+export const insert = <S extends any[]>(paramsHandler: (...args: S) => IInsertParams) => {
+  return async (...args: S): Promise<IInsertRes> => {
     const { table, data } = paramsHandler(...args);
     const keys = Object.keys(data);
     const sql = `insert into ?? set ` + keys.map(key => `${key} = ?`).join(', ');
@@ -51,3 +61,4 @@ export const insert = <S extends any[]>(paramsHandler: (...args: S) => IInsertPa
       data
     };
   };
+};

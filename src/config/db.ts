@@ -22,7 +22,8 @@ if (fs.existsSync(extraDbPath)) {
 
 export const tables = {
   problem: 'problem',
-  user: 'user'
+  user: 'user',
+  status: 'status'
 };
 
 export default db;

@@ -1,6 +1,9 @@
 import * as Router from 'koa-router';
 import ProblemList from '$models/problemList';
 import ProblemDetail from '$models/problemDetail';
+import StatusList from '$models/statusList';
+import KoaError from '$lib/error';
+import { ReqBody } from '$types';
 
 const training = new Router();
 
@@ -19,6 +22,16 @@ training.get('/problem/:problemNo', async ctx => {
   const problemDetail = new ProblemDetail();
   const { problemNo } = ctx.params;
   ctx.body = await problemDetail.getProblemDetail(problemNo);
+});
+
+training.post('/statusList', async ctx => {
+  const statusList = new StatusList();
+  const body: ReqBody = ctx.request.body;
+  if (!body) {
+    throw new KoaError('empty request body');
+  }
+  const { searchOption, pageNum, pageSize } = body;
+  ctx.body = await statusList.getStatusList(searchOption, pageNum, pageSize);
 });
 
 export default training;
