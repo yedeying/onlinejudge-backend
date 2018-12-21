@@ -9,7 +9,6 @@ const db = {
 };
 
 const extraDbPath = path.resolve('__dirname', '../runtime/db.json');
-console.log(extraDbPath);
 if (fs.existsSync(extraDbPath)) {
   const extra = fs.readFileSync(extraDbPath, { encoding: 'utf8' });
   try {
