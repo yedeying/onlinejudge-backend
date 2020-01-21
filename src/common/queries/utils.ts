@@ -3,6 +3,8 @@ import KoaError from '$lib/error';
 import { IInsertRes, IInsertParams, IQueryParams, IExecuteRes } from '$types';
 import { ErrorCode, StatusCode, EMPTY_RESULT } from '$constants';
 
+const omitPrefix = (str: string) => str.split('.').slice(-1)[0];
+
 export const queryAll = <T, S extends any[]=[]>(
   paramsHandler: (...args: S) => IQueryParams<T> | typeof EMPTY_RESULT | Promise<IQueryParams<T> | typeof EMPTY_RESULT>
 ) => {
@@ -27,7 +29,12 @@ export const queryAll = <T, S extends any[]=[]>(
       });
     }
     if (fields) {
-      res = res.map(item => fields.reduce((p: any, field: string) => ({ [field]: item[field], ...p }), {}));
+      res = res.map(item => fields.reduce(
+        (p: any, field: string) => ({
+          [omitPrefix(field)]: item[omitPrefix(field)],
+          ...p
+        }), {}
+      ));
     } else if (pick) {
       res = res.map(item => item[pick]);
     }

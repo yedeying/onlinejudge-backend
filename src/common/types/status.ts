@@ -15,12 +15,14 @@ export enum Language {
 
 export interface IStatus {
   id: UUID;
-  problemId: UUID;
-  contestId: UUID | null;
-  status: Status;
+  problemNo: string;
+  title: string;
+  userId: UUID;
+  username: string;
   usedTime: number;
   usedMemory: number;
   language: Language;
+  status: Status;
   createAt: Date;
   judgedAt: Date;
   updatedAt: Date;

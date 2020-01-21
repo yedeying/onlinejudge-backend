@@ -30,7 +30,7 @@ app.use(json({ pretty: false, param: 'pretty' }));
 // session
 app.keys = [config.site.secret];
 app.use(session({
-  store: redisStore(config.redis) as KoaSessionStore
+  store: redisStore(config.redis) as unknown as KoaSessionStore
 }));
 
 // passport

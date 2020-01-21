@@ -18,7 +18,7 @@ export const query = (sql: string, values?: any): Promise<any[] | IExecuteRes> =
         statusCode: StatusCode.INTERNAL_SERVER_ERROR
       };
       if (sql) {
-        errorOption.extra = { sql: parseSql(sql) };
+        errorOption.extra = { sql: parseSql(format(sql, values)) };
       }
       connection && connection.release();
       reject(new KoaError(err.message, errorOption));
@@ -35,7 +35,7 @@ export const query = (sql: string, values?: any): Promise<any[] | IExecuteRes> =
         return;
       }
       results && sql && Object.defineProperty(results, 'sql', {
-        value: parseSql(sql),
+        value: parseSql(format(sql, values)),
         enumerable: false,
         configurable: false,
         writable: false

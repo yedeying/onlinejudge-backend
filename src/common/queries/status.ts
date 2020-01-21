@@ -1,10 +1,11 @@
-import { IStatus, ISearchOption } from '$types';
+import { IStatus, ISearchOption, IQueryParams } from '$types';
 import { tables } from '$config/db';
 import { queryAll } from './utils';
+import { omit } from 'lodash-es';
+import { formatNo, alphaToNum } from '$models/problemList/utils';
 import { fetchUserByName } from './user';
 import { EMPTY_RESULT } from '$constants';
 import { problemIdFromNo } from './problem';
-import { alphaToNum } from '$models/problemList/utils';
 
 export const statusList = queryAll<IStatus, [ISearchOption, number, number]>(
   async (searchOption, page = 0, pageSize = 50) => {
@@ -40,9 +41,41 @@ export const statusList = queryAll<IStatus, [ISearchOption, number, number]>(
     }
 
     const whereSql = where.length ? where.map(cond => `${cond.key} = ?`).join(' and ') : '';
-    return {
-      sql: `select * from ?? ${whereSql} order by createdAt desc limit ?, ?`,
-      params: [tables.status, ...where.map(cond => cond.value), page * pageSize, pageSize]
+    const res: IQueryParams<IStatus> = {
+      sql: [
+        `select {fields} from ?? ${whereSql} a`,
+        'left join ?? b on a.userId = b.id',
+        'left join ?? c on a.problemId = c.id',
+        'order by a.createdAt desc, a.id * 1 desc limit ?, ?'
+      ].join(' '),
+      fields: [
+        'a.id',
+        'userId',
+        'username',
+        'volume',
+        'number',
+        'title',
+        'status',
+        'usedTime',
+        'usedMemory',
+        'language',
+        'ip',
+        'a.createdAt',
+        'a.updatedAt',
+        'judgedAt'
+      ],
+      params: [
+        tables.status,
+        tables.user,
+        tables.problem,
+        ...where.map(cond => cond.value),
+        page * pageSize, pageSize
+      ],
+      mapper: row => ({
+        ...omit(row, ['volume', 'number']) as any,
+        problemNo: formatNo(row.volume, row.number)
+      })
     };
+    return res;
   }
 );
