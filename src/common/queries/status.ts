@@ -9,7 +9,7 @@ import { alphaToNum } from '$models/problemList/utils';
 export const statusList = queryAll<IStatus, [ISearchOption, number, number]>(
   async (searchOption, page = 0, pageSize = 50) => {
     const { username, status, problemNo } = searchOption;
-    const where: { key: string, value: string | number }[] = [];
+    const where: { key: string; value: string | number }[] = [];
     if (username) {
       const user = await fetchUserByName(username);
       if (!user) {

@@ -1,4 +1,4 @@
-import * as passport from 'koa-passport';
+import passport from 'koa-passport';
 import { Strategy } from 'passport-local';
 import User from '$models/user';
 import KoaError from '$lib/error';

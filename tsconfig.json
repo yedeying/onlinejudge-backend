@@ -21,6 +21,7 @@
       "$*": ["src/common/*", "src/*"]
     },
 
+    "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,

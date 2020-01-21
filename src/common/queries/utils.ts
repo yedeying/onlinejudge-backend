@@ -52,7 +52,7 @@ export const insert = <S extends any[]>(paramsHandler: (...args: S) => IInsertPa
   return async (...args: S): Promise<IInsertRes> => {
     const { table, data } = paramsHandler(...args);
     const keys = Object.keys(data);
-    const sql = `insert into ?? set ` + keys.map(key => `${key} = ?`).join(', ');
+    const sql = 'insert into ?? set ' + keys.map(key => `${key} = ?`).join(', ');
     const params = [table, ...keys.map(key => data[key])];
     const res = await query(sql, params) as IExecuteRes;
     return {

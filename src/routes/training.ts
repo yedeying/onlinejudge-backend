@@ -1,11 +1,12 @@
-import * as Router from 'koa-router';
+import Router from 'koa-router';
 import ProblemList from '$models/problemList';
 import ProblemDetail from '$models/problemDetail';
 import StatusList from '$models/statusList';
 import KoaError from '$lib/error';
 import { ReqBody } from '$types';
+import { Context } from 'koa';
 
-const training = new Router();
+const training = new Router<any, Context>();
 
 training.get('/pageList', async ctx => {
   const problemList = new ProblemList();

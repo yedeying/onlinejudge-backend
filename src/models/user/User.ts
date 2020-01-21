@@ -1,6 +1,6 @@
 import * as patterns from '$regexp';
 import * as queries from '$queries';
-import * as uuid from 'uuid/v4';
+import uuid from 'uuid/v4';
 import { sha1 } from '$utils';
 import { ReqBody, IUser, IRegisterInfo } from '$types';
 import BaseValidator from '$lib/validator';

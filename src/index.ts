@@ -1,17 +1,19 @@
-import * as Koa from 'koa';
-import * as bodyParser from 'koa-bodyparser';
-import * as json from 'koa-json';
-import * as session from 'koa-generic-session';
-import * as logger from 'koa-logger';
-// import * as CSRF from 'koa-csrf';
-import * as cors from '@koa/cors';
-import * as redisStore from 'koa-redis';
+import Koa from 'koa';
+import bodyParser from 'koa-bodyparser';
+import json from 'koa-json';
+import session from 'koa-generic-session';
+import logger from 'koa-logger';
+// import CSRF from 'koa-csrf';
+import cors from '@koa/cors';
+import redisStore from 'koa-redis';
 import router from './routes';
 import config from './config';
 import passport from './middlewares/passport';
 import formatter from './middlewares/formatter';
 
 export const app = new Koa();
+
+type KoaSessionStore = session.SessionStore;
 
 // logger
 app.use(logger());
@@ -28,7 +30,7 @@ app.use(json({ pretty: false, param: 'pretty' }));
 // session
 app.keys = [config.site.secret];
 app.use(session({
-  store: redisStore(config.redis)
+  store: redisStore(config.redis) as KoaSessionStore
 }));
 
 // passport

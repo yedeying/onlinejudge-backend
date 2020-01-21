@@ -1,6 +1,6 @@
-import { IRouterContext } from 'koa-router';
+import { Context } from 'koa';
 
-export const home = (ctx: IRouterContext) => {
+export const home = (ctx: Context) => {
   ctx.body = {
     message: 'welcome'
   };

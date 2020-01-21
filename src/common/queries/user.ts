@@ -1,7 +1,7 @@
 import { queryOne, insert } from './utils';
 import { tables } from '$config/db';
 import { IUser, IRegisterInfo } from '$types';
-import * as uuid from 'uuid/v4';
+import uuid from 'uuid/v4';
 
 export const fetchUserByName = queryOne<IUser, [string]>(username => ({
   sql: 'select * from ?? where username = ?',
